@@ -1,1 +1,11 @@
+#available data systems are: single_yaml, multi_yaml and mysql
+#SINGLE_YAML is recommended for small private servers, as it is plug and play and requires no further configuration, but only has limited capacity
+#MULTI_YAML is not ever recommended but works for servers where single_yaml reaches its limits if you really don't want to use a database
+#MYSQL is recommended for big public servers
 dataSystem: single_yaml
+#the following settings are only required for mysql
+hostname: localhost
+port: 3306
+database: minecraft
+user: admin
+password: password

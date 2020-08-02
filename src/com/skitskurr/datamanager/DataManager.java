@@ -3,7 +3,9 @@ package com.skitskurr.datamanager;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import com.skitskurr.datamanager.datasource.DataSource;
@@ -417,13 +419,13 @@ public class DataManager {
 		}
 		
 		public static Optional<List<OfflinePlayer>> getMembers(final String group, final String pluginKey) {
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot write data
-			if(!optionalSource.isPresent()) {
+			final Optional<List<UUID>> memberIDs = getMemberIDs(group, pluginKey);
+			// if we have no IDs we can't map them on the players
+			if(memberIDs.isEmpty()) {
 				return Optional.empty();
 			}
 			
-			return optionalSource.get().getMembers(group, pluginKey);
+			return Optional.of(memberIDs.get().stream().map(uuid -> Bukkit.getOfflinePlayer(uuid)).collect(Collectors.toList()));
 		}
 		
 		public static Optional<List<UUID>> getMemberIDs(final String group, final String pluginKey) {

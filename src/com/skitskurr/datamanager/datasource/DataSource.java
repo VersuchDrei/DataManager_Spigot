@@ -10,6 +10,8 @@ public interface DataSource {
 	
 	static final String FILE_PATH = "plugins/DataManager/";
 	
+	public void setup();
+	
 	public void close();
 
 	public boolean set(String pluginKey, String dataKey, String data) ;
@@ -79,8 +81,6 @@ public interface DataSource {
 	public boolean removeMember(OfflinePlayer player, String group, String pluginKey);
 	
 	public boolean isMember(OfflinePlayer player, String group, String pluginKey);
-	
-	public Optional<List<OfflinePlayer>> getMembers(String group, String pluginKey);
 	
 	public Optional<List<UUID>> getMemberIDs(String group, String pluginKey);
 	

@@ -1,4 +1,4 @@
-package com.skitskurr.datamanager.datasource;
+package com.skitskurr.datamanager.datasource.config;
 
 public enum ConfigDataType {
 	STRING("string"),

@@ -2,13 +2,22 @@ package com.skitskurr.datamanager;
 
 import java.util.Optional;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.skitskurr.datamanager.datasource.DataSource;
-import com.skitskurr.datamanager.datasource.MultiYamlDataSource;
-import com.skitskurr.datamanager.datasource.SingleYamlDataSource;
+import com.skitskurr.datamanager.datasource.config.MultiYamlDataSource;
+import com.skitskurr.datamanager.datasource.config.SingleYamlDataSource;
+import com.skitskurr.datamanager.datasource.database.MySQLDataSource;
 
 public class Main extends JavaPlugin{
+	
+	private static final String CONFIG_KEY_DATA_SYSTEM = "dataSystem";
+	private static final String CONFIG_KEY_HOSTNAME = "hostname";
+	private static final String CONFIG_KEY_PORT = "port";
+	private static final String CONFIG_KEY_DATABASE = "database";
+	private static final String CONFIG_KEY_USER = "user";
+	private static final String CONFIG_KEY_PASSWORD = "password";
 	
 	private static Main current;
 	
@@ -28,7 +37,8 @@ public class Main extends JavaPlugin{
 	@Override
 	public void onEnable() {
 		super.saveDefaultConfig();
-		final DataSystem dataSystem = DataSystem.valueOf(getConfig().getString("dataSystem").toUpperCase());
+		final FileConfiguration config = getConfig();
+		final DataSystem dataSystem = DataSystem.valueOf(config.getString(Main.CONFIG_KEY_DATA_SYSTEM).toUpperCase());
 		switch(dataSystem) {
 		case SINGLE_YAML:
 			this.dataSource = new SingleYamlDataSource();
@@ -36,7 +46,16 @@ public class Main extends JavaPlugin{
 		case MULTI_YAML:
 			this.dataSource = new MultiYamlDataSource(this);
 			break;
+		case MYSQL:
+			final String hostname = config.getString(Main.CONFIG_KEY_HOSTNAME);
+			final String port = config.getString(Main.CONFIG_KEY_PORT);
+			final String database = config.getString(Main.CONFIG_KEY_DATABASE);
+			final String user = config.getString(Main.CONFIG_KEY_USER);
+			final String password = config.getString(Main.CONFIG_KEY_PASSWORD);
+			this.dataSource = new MySQLDataSource(hostname, port, database, user, password);
+			break;
 		}
+		this.dataSource.setup();
 		Main.current = this;
 	}
 	

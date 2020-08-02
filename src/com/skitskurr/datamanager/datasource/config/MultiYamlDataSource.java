@@ -1,4 +1,4 @@
-package com.skitskurr.datamanager.datasource;
+package com.skitskurr.datamanager.datasource.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +21,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.skitskurr.datamanager.datasource.DataSource;
 
 public class MultiYamlDataSource implements DataSource{
 	
@@ -74,14 +76,21 @@ public class MultiYamlDataSource implements DataSource{
 		
 	}
 	
+	private final JavaPlugin plugin;
+	
 	private final File globalFile;
 	private final YamlConfiguration globalConfig;
 	private final Map<UUID, ConfigPair> playerConfigs = new HashMap<>();
 	private final Map<String, Map<String, ConfigPair>> groupConfigs = new HashMap<>();
 	
 	public MultiYamlDataSource(final JavaPlugin plugin) {
+		this.plugin = plugin;
 		this.globalFile = new File(DataSource.FILE_PATH + MultiYamlDataSource.FILE_NAME_GLOBAL);
 		this.globalConfig = YamlConfiguration.loadConfiguration(globalFile);
+	}
+	
+	@Override
+	public void setup() {
 		new File(MultiYamlDataSource.PLAYER_FILE_PATH).mkdirs();
 		new File(MultiYamlDataSource.GROUP_FILE_PATH).mkdirs();
 		Bukkit.getPluginManager().registerEvents(new EventListener(), plugin);
@@ -440,23 +449,6 @@ public class MultiYamlDataSource implements DataSource{
 		final List<String> uuids = pair.config.getStringList(MultiYamlDataSource.CONFIG_TYPE_MEMBERS);
 		
 		return uuids.contains(uuid);
-	}
-	
-	@Override
-	public Optional<List<OfflinePlayer>> getMembers(final String group, final String pluginKey){
-		if(!this.groupConfigs.containsKey(pluginKey)) {
-			return Optional.empty();
-		}
-		final Map<String, ConfigPair> map = this.groupConfigs.get(pluginKey);
-		if(!map.containsKey(group)) {
-			return Optional.empty();
-		}
-		
-		final ConfigPair pair = map.get(group);
-		final List<OfflinePlayer> members = pair.config.getStringList(MultiYamlDataSource.CONFIG_TYPE_MEMBERS)
-				.stream().map(uuid -> Bukkit.getOfflinePlayer(UUID.fromString(uuid))).collect(Collectors.toList());
-		
-		return Optional.of(members);
 	}
 	
 	@Override

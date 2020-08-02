@@ -1,4 +1,4 @@
-package com.skitskurr.datamanager.datasource;
+package com.skitskurr.datamanager.datasource.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,10 +8,11 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import com.skitskurr.datamanager.datasource.DataSource;
 
 public class SingleYamlDataSource implements DataSource{
 	
@@ -28,6 +29,10 @@ public class SingleYamlDataSource implements DataSource{
 	public SingleYamlDataSource() {
 		this.configFile = new File(DataSource.FILE_PATH + SingleYamlDataSource.FILE_NAME);
 		this.config = YamlConfiguration.loadConfiguration(configFile);
+	}
+	
+	@Override
+	public void setup() {
 	}
 
 	@Override
@@ -326,20 +331,6 @@ public class SingleYamlDataSource implements DataSource{
 		final String uuid = player.getUniqueId().toString();
 		final List<String> uuids = this.config.getStringList(configKeyMembers);
 		return uuids.contains(uuid);
-	}
-	
-	@Override
-	public Optional<List<OfflinePlayer>> getMembers(final String group, final String pluginKey) {
-		final String configKey = buildConfigKeyGroup(group, pluginKey);
-		if(!this.config.contains(configKey)) {
-			return Optional.empty();
-		}
-		
-		final String configKeyMembers = buildConfigKeyMembers(group, pluginKey);
-		final List<OfflinePlayer> members = this.config.getStringList(configKeyMembers)
-				.stream().map(uuid -> Bukkit.getOfflinePlayer(UUID.fromString(uuid))).collect(Collectors.toList());
-		
-		return Optional.of(members);
 	}
 	
 	@Override
