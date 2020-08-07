@@ -1,16 +1,28 @@
 package com.skitskurr.datamanager.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 public class StringUtils {
 
 	public static List<String> stringToList(final String string){
-		return Arrays.stream(string.split("\\;;\\")).map(element -> element.replace("\\;", ";")).collect(Collectors.toList());
+		try {
+			final JSONParser parser = new JSONParser();
+			final JSONArray array = (JSONArray) parser.parse(string);
+			return Arrays.stream(array.toArray()).map(object -> object.toString()).collect(Collectors.toList());
+		} catch (final ParseException e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
 	}
 	
 	public static String listToString(final List<String> list) {
-		return list.stream().map(string -> string.replace(";", "\\;")).collect(Collectors.joining("\\;;\\"));
+		return JSONArray.toJSONString(list);
 	}
 }
