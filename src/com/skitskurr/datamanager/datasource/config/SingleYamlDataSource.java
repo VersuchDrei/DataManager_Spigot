@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -146,50 +145,50 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final String data) {
-		this.config.set(buildConfigKeyPlayerData(player, ConfigDataType.STRING, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final String data) {
+		this.config.set(buildConfigKeyPlayerData(uuid, ConfigDataType.STRING, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final int data) {
-		this.config.set(buildConfigKeyPlayerData(player, ConfigDataType.INT, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final int data) {
+		this.config.set(buildConfigKeyPlayerData(uuid, ConfigDataType.INT, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final long data) {
-		this.config.set(buildConfigKeyPlayerData(player, ConfigDataType.LONG, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final long data) {
+		this.config.set(buildConfigKeyPlayerData(uuid, ConfigDataType.LONG, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final float data) {
-		this.config.set(buildConfigKeyPlayerData(player, ConfigDataType.FLOAT, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final float data) {
+		this.config.set(buildConfigKeyPlayerData(uuid, ConfigDataType.FLOAT, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final double data) {
-		this.config.set(buildConfigKeyPlayerData(player, ConfigDataType.DOUBLE, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final double data) {
+		this.config.set(buildConfigKeyPlayerData(uuid, ConfigDataType.DOUBLE, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final boolean data) {
-		this.config.set(buildConfigKeyPlayerData(player, ConfigDataType.BOOLEAN, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final boolean data) {
+		this.config.set(buildConfigKeyPlayerData(uuid, ConfigDataType.BOOLEAN, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final List<String> data) {
-		this.config.set(buildConfigKeyPlayerData(player, ConfigDataType.LIST, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final List<String> data) {
+		this.config.set(buildConfigKeyPlayerData(uuid, ConfigDataType.LIST, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public Optional<String> getString(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final String data = this.config.getString(buildConfigKeyPlayerData(player, ConfigDataType.STRING, pluginKey, dataKey));
+	public Optional<String> getString(final UUID uuid, final String pluginKey, final String dataKey) {
+		final String data = this.config.getString(buildConfigKeyPlayerData(uuid, ConfigDataType.STRING, pluginKey, dataKey));
 		if(data == null) {
 			return Optional.empty();
 		}
@@ -197,8 +196,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Integer> getInt(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerData(player, ConfigDataType.INT, pluginKey, dataKey);
+	public Optional<Integer> getInt(final UUID uuid, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerData(uuid, ConfigDataType.INT, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -206,8 +205,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Long> getLong(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerData(player, ConfigDataType.LONG, pluginKey, dataKey);
+	public Optional<Long> getLong(final UUID uuid, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerData(uuid, ConfigDataType.LONG, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -215,8 +214,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Float> getFloat(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerData(player, ConfigDataType.FLOAT, pluginKey, dataKey);
+	public Optional<Float> getFloat(final UUID uuid, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerData(uuid, ConfigDataType.FLOAT, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -224,8 +223,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Double> getDouble(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerData(player, ConfigDataType.DOUBLE, pluginKey, dataKey);
+	public Optional<Double> getDouble(final UUID uuid, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerData(uuid, ConfigDataType.DOUBLE, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -233,8 +232,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Boolean> getBoolean(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerData(player, ConfigDataType.BOOLEAN, pluginKey, dataKey);
+	public Optional<Boolean> getBoolean(final UUID uuid, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerData(uuid, ConfigDataType.BOOLEAN, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -242,8 +241,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<List<String>> getList(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerData(player, ConfigDataType.LIST, pluginKey, dataKey);
+	public Optional<List<String>> getList(final UUID uuid, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerData(uuid, ConfigDataType.LIST, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -283,54 +282,53 @@ public class SingleYamlDataSource implements DataSource{
 	}
 	
 	@Override
-	public boolean addMember(final OfflinePlayer player, final String group, final String pluginKey) {
+	public boolean addMember(final UUID uuid, final String group, final String pluginKey) {
 		final String configKey = buildConfigKeyGroup(group, pluginKey);
 		if(!this.config.contains(configKey)) {
 			return false;
 		}
 		
 		final String configKeyMembers = buildConfigKeyMembers(group, pluginKey);
-		final String uuid = player.getUniqueId().toString();
+		final String uuidString = uuid.toString();
 		final List<String> uuids = this.config.getStringList(configKeyMembers);
-		if(uuids.contains(uuid)) {
+		if(uuids.contains(uuidString)) {
 			return false;
 		}
-		uuids.add(uuid);
+		uuids.add(uuidString);
 		
 		this.config.set(configKeyMembers, uuids);
 		return save();
 	}
 	
 	@Override
-	public boolean removeMember(final OfflinePlayer player, final String group, final String pluginKey) {
+	public boolean removeMember(final UUID uuid, final String group, final String pluginKey) {
 		final String configKey = buildConfigKeyGroup(group, pluginKey);
 		if(!this.config.contains(configKey)) {
 			return false;
 		}
 		
 		final String configKeyMembers = buildConfigKeyMembers(group, pluginKey);
-		final String uuid = player.getUniqueId().toString();
+		final String uuidString = uuid.toString();
 		final List<String> uuids = this.config.getStringList(configKeyMembers);
-		if(!uuids.contains(uuid)) {
+		if(!uuids.contains(uuidString)) {
 			return false;
 		}
-		uuids.remove(uuid);
+		uuids.remove(uuidString);
 		
 		this.config.set(configKeyMembers, uuids);
 		return save();
 	}
 	
 	@Override
-	public boolean isMember(final OfflinePlayer player, final String group, final String pluginKey) {
+	public boolean isMember(final UUID uuid, final String group, final String pluginKey) {
 		final String configKey = buildConfigKeyGroup(group, pluginKey);
 		if(!this.config.contains(configKey)) {
 			return false;
 		}
 		
 		final String configKeyMembers = buildConfigKeyMembers(group, pluginKey);
-		final String uuid = player.getUniqueId().toString();
 		final List<String> uuids = this.config.getStringList(configKeyMembers);
-		return uuids.contains(uuid);
+		return uuids.contains(uuid.toString());
 	}
 	
 	@Override
@@ -364,10 +362,10 @@ public class SingleYamlDataSource implements DataSource{
 	}
 	
 	@Override
-	public List<String> getGroups(final OfflinePlayer player, final String pluginKey){
+	public List<String> getGroups(final UUID uuid, final String pluginKey){
 		final List<String> groups = new ArrayList<String>();
 		for(final String group: getGroups(pluginKey)) {
-			if(isMember(player, group, pluginKey)) {
+			if(isMember(uuid, group, pluginKey)) {
 				groups.add(group);
 			}
 		}
@@ -480,50 +478,50 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final String data) {
-		this.config.set(buildConfigKeyPlayerGroupData(player, group, ConfigDataType.STRING, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final String data) {
+		this.config.set(buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.STRING, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final int data) {
-		this.config.set(buildConfigKeyPlayerGroupData(player, group, ConfigDataType.INT, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final int data) {
+		this.config.set(buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.INT, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final long data) {
-		this.config.set(buildConfigKeyPlayerGroupData(player, group, ConfigDataType.LONG, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final long data) {
+		this.config.set(buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.LONG, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final float data) {
-		this.config.set(buildConfigKeyPlayerGroupData(player, group, ConfigDataType.FLOAT, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final float data) {
+		this.config.set(buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.FLOAT, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final double data) {
-		this.config.set(buildConfigKeyPlayerGroupData(player, group, ConfigDataType.DOUBLE, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final double data) {
+		this.config.set(buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.DOUBLE, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final boolean data) {
-		this.config.set(buildConfigKeyPlayerGroupData(player, group, ConfigDataType.BOOLEAN, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final boolean data) {
+		this.config.set(buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.BOOLEAN, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final List<String> data) {
-		this.config.set(buildConfigKeyPlayerGroupData(player, group, ConfigDataType.LIST, pluginKey, dataKey), data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final List<String> data) {
+		this.config.set(buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.LIST, pluginKey, dataKey), data);
 		return save();
 	}
 
 	@Override
-	public Optional<String> getString(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final String data = this.config.getString(buildConfigKeyPlayerGroupData(player, group, ConfigDataType.STRING, pluginKey, dataKey));
+	public Optional<String> getString(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final String data = this.config.getString(buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.STRING, pluginKey, dataKey));
 		if(data == null) {
 			return Optional.empty();
 		}
@@ -531,8 +529,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Integer> getInt(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerGroupData(player, group, ConfigDataType.INT, pluginKey, dataKey);
+	public Optional<Integer> getInt(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.INT, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -540,8 +538,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Long> getLong(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerGroupData(player, group, ConfigDataType.LONG, pluginKey, dataKey);
+	public Optional<Long> getLong(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.LONG, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -549,8 +547,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Float> getFloat(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerGroupData(player, group, ConfigDataType.FLOAT, pluginKey, dataKey);
+	public Optional<Float> getFloat(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.FLOAT, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -558,8 +556,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Double> getDouble(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerGroupData(player, group, ConfigDataType.DOUBLE, pluginKey, dataKey);
+	public Optional<Double> getDouble(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.DOUBLE, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -567,8 +565,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Boolean> getBoolean(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerGroupData(player, group, ConfigDataType.BOOLEAN, pluginKey, dataKey);
+	public Optional<Boolean> getBoolean(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.BOOLEAN, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -576,8 +574,8 @@ public class SingleYamlDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<List<String>> getList(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final String configKey = buildConfigKeyPlayerGroupData(player, group, ConfigDataType.LIST, pluginKey, dataKey);
+	public Optional<List<String>> getList(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final String configKey = buildConfigKeyPlayerGroupData(uuid, group, ConfigDataType.LIST, pluginKey, dataKey);
 		if(!this.config.contains(configKey)) {
 			return Optional.empty();
 		}
@@ -590,10 +588,6 @@ public class SingleYamlDataSource implements DataSource{
 	
 	private static String buildConfigKeyPlayerData(final UUID uuid, final ConfigDataType type, final String pluginKey, final String dataKey) {
 		return SingleYamlDataSource.CONFIG_TYPE_PLAYERS + "." + uuid.toString() + "." + pluginKey + "." + type.getKey() + "." + dataKey;
-	}
-	
-	private static String buildConfigKeyPlayerData(final OfflinePlayer player, final ConfigDataType type, final String pluginKey, final String dataKey) {
-		return buildConfigKeyPlayerData(player.getUniqueId(), type, pluginKey, dataKey);
 	}
 	
 	private static String buildConfigKeyGroups(final String pluginKey) {
@@ -618,10 +612,6 @@ public class SingleYamlDataSource implements DataSource{
 	
 	private static String buildConfigKeyPlayerGroupData(final UUID uuid, final String group, final ConfigDataType type, final String pluginKey, final String dataKey) {
 		return buildConfigKeyPlayerGroup(uuid, group, pluginKey) + "." + type.getKey() + "." + dataKey;
-	}
-	
-	private static String buildConfigKeyPlayerGroupData(final OfflinePlayer player, final String group, final ConfigDataType type, final String pluginKey, final String dataKey) {
-		return buildConfigKeyPlayerGroupData(player.getUniqueId(), group, type, pluginKey, dataKey);
 	}
 	
 	private boolean save() {

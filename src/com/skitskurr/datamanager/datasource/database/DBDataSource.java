@@ -6,8 +6,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.bukkit.OfflinePlayer;
-
 import com.skitskurr.datamanager.datasource.DataSource;
 import com.skitskurr.datamanager.utils.StringUtils;
 
@@ -441,43 +439,43 @@ public abstract class DBDataSource implements DataSource{
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final String data) {
-		return set(DBDataSource.TABLE_PLAYER_STRINGS, pluginKey, player.getUniqueId(), dataKey, ColumnType.STRING_VALUE, data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final String data) {
+		return set(DBDataSource.TABLE_PLAYER_STRINGS, pluginKey, uuid, dataKey, ColumnType.STRING_VALUE, data);
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final int data) {
-		return set(DBDataSource.TABLE_PLAYER_INTS, pluginKey, player.getUniqueId(), dataKey, ColumnType.INT, "" + data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final int data) {
+		return set(DBDataSource.TABLE_PLAYER_INTS, pluginKey, uuid, dataKey, ColumnType.INT, "" + data);
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final long data) {
-		return set(DBDataSource.TABLE_PLAYER_LONGS, pluginKey, player.getUniqueId(), dataKey, ColumnType.LONG, "" + data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final long data) {
+		return set(DBDataSource.TABLE_PLAYER_LONGS, pluginKey, uuid, dataKey, ColumnType.LONG, "" + data);
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final float data) {
-		return set(DBDataSource.TABLE_PLAYER_FLOATS, pluginKey, player.getUniqueId(), dataKey, ColumnType.FLOAT, "" + data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final float data) {
+		return set(DBDataSource.TABLE_PLAYER_FLOATS, pluginKey, uuid, dataKey, ColumnType.FLOAT, "" + data);
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final double data) {
-		return set(DBDataSource.TABLE_PLAYER_DOUBLES, pluginKey, player.getUniqueId(), dataKey, ColumnType.DOUBLE, "" + data);
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final double data) {
+		return set(DBDataSource.TABLE_PLAYER_DOUBLES, pluginKey, uuid, dataKey, ColumnType.DOUBLE, "" + data);
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final boolean data) {
-		return set(DBDataSource.TABLE_PLAYER_BOOLEANS, pluginKey, player.getUniqueId(), dataKey, ColumnType.BOOLEAN, data ? "1" : "0");
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final boolean data) {
+		return set(DBDataSource.TABLE_PLAYER_BOOLEANS, pluginKey, uuid, dataKey, ColumnType.BOOLEAN, data ? "1" : "0");
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final List<String> data) {
-		return set(DBDataSource.TABLE_PLAYER_LISTS, pluginKey, player.getUniqueId(), dataKey, ColumnType.STRING_LIST, StringUtils.listToString(data));
+	public boolean set(final UUID uuid, final String pluginKey, final String dataKey, final List<String> data) {
+		return set(DBDataSource.TABLE_PLAYER_LISTS, pluginKey, uuid, dataKey, ColumnType.STRING_LIST, StringUtils.listToString(data));
 	}
 
 	@Override
-	public Optional<String> getString(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_PLAYER_STRINGS, pluginKey, player.getUniqueId(), dataKey);
+	public Optional<String> getString(final UUID uuid, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_PLAYER_STRINGS, pluginKey, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -486,8 +484,8 @@ public abstract class DBDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Integer> getInt(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_PLAYER_INTS, pluginKey, player.getUniqueId(), dataKey);
+	public Optional<Integer> getInt(final UUID uuid, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_PLAYER_INTS, pluginKey, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -496,8 +494,8 @@ public abstract class DBDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Long> getLong(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_PLAYER_LONGS, pluginKey, player.getUniqueId(), dataKey);
+	public Optional<Long> getLong(final UUID uuid, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_PLAYER_LONGS, pluginKey, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -506,8 +504,8 @@ public abstract class DBDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Float> getFloat(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_PLAYER_FLOATS, pluginKey, player.getUniqueId(), dataKey);
+	public Optional<Float> getFloat(final UUID uuid, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_PLAYER_FLOATS, pluginKey, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -516,8 +514,8 @@ public abstract class DBDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Double> getDouble(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_PLAYER_DOUBLES, pluginKey, player.getUniqueId(), dataKey);
+	public Optional<Double> getDouble(final UUID uuid, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_PLAYER_DOUBLES, pluginKey, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -526,8 +524,8 @@ public abstract class DBDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<Boolean> getBoolean(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_PLAYER_BOOLEANS, pluginKey, player.getUniqueId(), dataKey);
+	public Optional<Boolean> getBoolean(final UUID uuid, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_PLAYER_BOOLEANS, pluginKey, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -536,8 +534,8 @@ public abstract class DBDataSource implements DataSource{
 	}
 
 	@Override
-	public Optional<List<String>> getList(final OfflinePlayer player, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_PLAYER_LISTS, pluginKey, player.getUniqueId(), dataKey);
+	public Optional<List<String>> getList(final UUID uuid, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_PLAYER_LISTS, pluginKey, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -567,27 +565,27 @@ public abstract class DBDataSource implements DataSource{
 	}
 
 	@Override
-	public boolean addMember(final OfflinePlayer player, final String group, final String pluginKey) {
+	public boolean addMember(final UUID uuid, final String group, final String pluginKey) {
 		return updateValue(DBDataSource.TABLE_GROUP_MEMBERS,
 				new UpdateColumnEntry(DBDataSource.COLUMN_PLUGIN_KEY, ColumnType.STRING_KEY, pluginKey, true),
 				new UpdateColumnEntry(DBDataSource.COLUMN_GROUP, ColumnType.STRING_KEY, group, true),
-				new UpdateColumnEntry(DBDataSource.COLUMN_PLAYER, ColumnType.STRING_KEY, player.getUniqueId().toString(), true));
+				new UpdateColumnEntry(DBDataSource.COLUMN_PLAYER, ColumnType.STRING_KEY, uuid.toString(), true));
 	}
 
 	@Override
-	public boolean removeMember(final OfflinePlayer player, final String group, final String pluginKey) {
+	public boolean removeMember(final UUID uuid, final String group, final String pluginKey) {
 		return deleteValue(DBDataSource.TABLE_GROUP_MEMBERS,
 				new UpdateColumnEntry(DBDataSource.COLUMN_PLUGIN_KEY, ColumnType.STRING_KEY, pluginKey, true),
 				new UpdateColumnEntry(DBDataSource.COLUMN_GROUP, ColumnType.STRING_KEY, group, true),
-				new UpdateColumnEntry(DBDataSource.COLUMN_PLAYER, ColumnType.STRING_KEY, player.getUniqueId().toString(), true));
+				new UpdateColumnEntry(DBDataSource.COLUMN_PLAYER, ColumnType.STRING_KEY, uuid.toString(), true));
 	}
 
 	@Override
-	public boolean isMember(final OfflinePlayer player, final String group, final String pluginKey) {
+	public boolean isMember(final UUID uuid, final String group, final String pluginKey) {
 		return exists(DBDataSource.TABLE_GROUP_MEMBERS,
 				new ColumnEntry(DBDataSource.COLUMN_PLUGIN_KEY, ColumnType.STRING_KEY, pluginKey),
 				new ColumnEntry(DBDataSource.COLUMN_GROUP, ColumnType.STRING_KEY, group),
-				new ColumnEntry(DBDataSource.COLUMN_PLAYER, ColumnType.STRING_KEY, player.getUniqueId().toString()));
+				new ColumnEntry(DBDataSource.COLUMN_PLAYER, ColumnType.STRING_KEY, uuid.toString()));
 	}
 
 	@Override
@@ -611,10 +609,10 @@ public abstract class DBDataSource implements DataSource{
 	}
 
 	@Override
-	public List<String> getGroups(final OfflinePlayer player, final String pluginKey) {
+	public List<String> getGroups(final UUID uuid, final String pluginKey) {
 		final Result result = getResult(DBDataSource.TABLE_GROUP_MEMBERS, DBDataSource.COLUMN_GROUP, 
 				new ColumnEntry(DBDataSource.COLUMN_PLUGIN_KEY, ColumnType.STRING_KEY, pluginKey),
-				new ColumnEntry(DBDataSource.COLUMN_PLAYER, ColumnType.STRING_KEY, player.getUniqueId().toString()));
+				new ColumnEntry(DBDataSource.COLUMN_PLAYER, ColumnType.STRING_KEY, uuid.toString()));
 		
 		return result.getList();
 	}
@@ -725,43 +723,43 @@ final Result result = get(DBDataSource.TABLE_GROUP_LONGS, pluginKey, group, data
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final String data) {
-		return set(DBDataSource.TABLE_GROUP_MEMBER_STRINGS, pluginKey, group, player.getUniqueId(), dataKey, ColumnType.STRING_VALUE, data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final String data) {
+		return set(DBDataSource.TABLE_GROUP_MEMBER_STRINGS, pluginKey, group, uuid, dataKey, ColumnType.STRING_VALUE, data);
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final int data) {
-		return set(DBDataSource.TABLE_GROUP_MEMBER_INTS, pluginKey, group, player.getUniqueId(), dataKey, ColumnType.INT, "" + data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final int data) {
+		return set(DBDataSource.TABLE_GROUP_MEMBER_INTS, pluginKey, group, uuid, dataKey, ColumnType.INT, "" + data);
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final long data) {
-		return set(DBDataSource.TABLE_GROUP_MEMBER_LONGS, pluginKey, group, player.getUniqueId(), dataKey, ColumnType.LONG, "" + data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final long data) {
+		return set(DBDataSource.TABLE_GROUP_MEMBER_LONGS, pluginKey, group, uuid, dataKey, ColumnType.LONG, "" + data);
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final float data) {
-		return set(DBDataSource.TABLE_GROUP_MEMBER_FLOATS, pluginKey, group, player.getUniqueId(), dataKey, ColumnType.FLOAT, "" + data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final float data) {
+		return set(DBDataSource.TABLE_GROUP_MEMBER_FLOATS, pluginKey, group, uuid, dataKey, ColumnType.FLOAT, "" + data);
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final double data) {
-		return set(DBDataSource.TABLE_GROUP_MEMBER_DOUBLES, pluginKey, group, player.getUniqueId(), dataKey, ColumnType.DOUBLE, "" + data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final double data) {
+		return set(DBDataSource.TABLE_GROUP_MEMBER_DOUBLES, pluginKey, group, uuid, dataKey, ColumnType.DOUBLE, "" + data);
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final boolean data) {
-		return set(DBDataSource.TABLE_GROUP_MEMBER_BOOLEANS, pluginKey, group, player.getUniqueId(), dataKey, ColumnType.BOOLEAN, "" + data);
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final boolean data) {
+		return set(DBDataSource.TABLE_GROUP_MEMBER_BOOLEANS, pluginKey, group, uuid, dataKey, ColumnType.BOOLEAN, "" + data);
 	}
 
 	@Override
-	public boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final List<String> data) {
-		return set(DBDataSource.TABLE_GROUP_MEMBER_LISTS, pluginKey, group, player.getUniqueId(), dataKey, ColumnType.STRING_VALUE, StringUtils.listToString(data));
+	public boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final List<String> data) {
+		return set(DBDataSource.TABLE_GROUP_MEMBER_LISTS, pluginKey, group, uuid, dataKey, ColumnType.STRING_VALUE, StringUtils.listToString(data));
 	}
 
 	@Override
-	public Optional<String> getString(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_STRINGS, pluginKey, group, player.getUniqueId(), dataKey);
+	public Optional<String> getString(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_STRINGS, pluginKey, group, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -770,8 +768,8 @@ final Result result = get(DBDataSource.TABLE_GROUP_LONGS, pluginKey, group, data
 	}
 
 	@Override
-	public Optional<Integer> getInt(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_INTS, pluginKey, group, player.getUniqueId(), dataKey);
+	public Optional<Integer> getInt(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_INTS, pluginKey, group, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -780,8 +778,8 @@ final Result result = get(DBDataSource.TABLE_GROUP_LONGS, pluginKey, group, data
 	}
 
 	@Override
-	public Optional<Long> getLong(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_LONGS, pluginKey, group, player.getUniqueId(), dataKey);
+	public Optional<Long> getLong(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_LONGS, pluginKey, group, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -790,8 +788,8 @@ final Result result = get(DBDataSource.TABLE_GROUP_LONGS, pluginKey, group, data
 	}
 
 	@Override
-	public Optional<Float> getFloat(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_FLOATS, pluginKey, group, player.getUniqueId(), dataKey);
+	public Optional<Float> getFloat(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_FLOATS, pluginKey, group, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -800,8 +798,8 @@ final Result result = get(DBDataSource.TABLE_GROUP_LONGS, pluginKey, group, data
 	}
 
 	@Override
-	public Optional<Double> getDouble(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_DOUBLES, pluginKey, group, player.getUniqueId(), dataKey);
+	public Optional<Double> getDouble(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_DOUBLES, pluginKey, group, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -810,8 +808,8 @@ final Result result = get(DBDataSource.TABLE_GROUP_LONGS, pluginKey, group, data
 	}
 
 	@Override
-	public Optional<Boolean> getBoolean(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_BOOLEANS, pluginKey, group, player.getUniqueId(), dataKey);
+	public Optional<Boolean> getBoolean(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_BOOLEANS, pluginKey, group, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();
@@ -820,8 +818,8 @@ final Result result = get(DBDataSource.TABLE_GROUP_LONGS, pluginKey, group, data
 	}
 
 	@Override
-	public Optional<List<String>> getList(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey) {
-		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_LISTS, pluginKey, group, player.getUniqueId(), dataKey);
+	public Optional<List<String>> getList(final UUID uuid, final String group, final String pluginKey, final String dataKey) {
+		final Result result = get(DBDataSource.TABLE_GROUP_MEMBER_LISTS, pluginKey, group, uuid, dataKey);
 		
 		if(result.isEmpty()) {
 			return Optional.empty();

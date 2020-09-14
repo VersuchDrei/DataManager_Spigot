@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import com.skitskurr.datamanager.datasource.DataSource;
 
@@ -186,172 +187,256 @@ public class DataManager {
 	
 	public static class Players{
 
-		public static boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final String data) {
+		public static boolean set(final UUID uuid, final String pluginKey, final String dataKey, final String data) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot write data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final String data) {
+			return set(player.getUniqueId(), pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final UUID uuid, final String pluginKey, final String dataKey, final int data) {
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot write data
+			if(!optionalSource.isPresent()) {
+				return false;
+			}
+			
+			return optionalSource.get().set(uuid, pluginKey, dataKey, data);
 		}
 		
 		public static boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final int data) {
+			return set(player.getUniqueId(), pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final UUID uuid, final String pluginKey, final String dataKey, final long data) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot write data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, pluginKey, dataKey, data);
 		}
 		
 		public static boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final long data) {
+			return set(player.getUniqueId(), pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final UUID uuid, final String pluginKey, final String dataKey, final float data) {
 			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot write data
+			// if no data source is present we cannot read data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, pluginKey, dataKey, data);
 		}
 		
 		public static boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final float data) {
+			return set(player.getUniqueId(), pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final UUID uuid, final String pluginKey, final String dataKey, final double data) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot read data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, pluginKey, dataKey, data);
 		}
 		
 		public static boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final double data) {
+			return set(player.getUniqueId(), pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final UUID uuid, final String pluginKey, final String dataKey, final boolean data) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot read data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, pluginKey, dataKey, data);
 		}
 		
 		public static boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final boolean data) {
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return false;
-			}
-			
-			return optionalSource.get().set(player, pluginKey, dataKey, data);
+			return set(player.getUniqueId(), pluginKey, dataKey, data);
 		}
 
-		public static boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final List<String> data) {
+		public static boolean set(final UUID uuid, final String pluginKey, final String dataKey, final List<String> data) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot write data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final OfflinePlayer player, final String pluginKey, final String dataKey, final List<String> data) {
+			return set(player.getUniqueId(), pluginKey, dataKey, data);
+		}
+		
+		public static Optional<String> getString(final UUID uuid, final String pluginKey, final String dataKey){
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot read data
+			if(!optionalSource.isPresent()) {
+				return Optional.empty();
+			}
+			
+			return optionalSource.get().getString(uuid, pluginKey, dataKey);
+		}
+		
+		public static String getString(final UUID uuid, final String pluginKey, final String dataKey, final String other) {
+			return getString(uuid, pluginKey, dataKey).orElse(other);
 		}
 		
 		public static Optional<String> getString(final OfflinePlayer player, final String pluginKey, final String dataKey){
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return Optional.empty();
-			}
-			
-			return optionalSource.get().getString(player, pluginKey, dataKey);
+			return getString(player.getUniqueId(), pluginKey, dataKey);
 		}
 		
 		public static String getString(final OfflinePlayer player, final String pluginKey, final String dataKey, final String other) {
-			return getString(player, pluginKey, dataKey).orElse(other);
+			return getString(player.getUniqueId(), pluginKey, dataKey, other);
+		}
+		
+		public static Optional<Integer> getInt(final UUID uuid, final String pluginKey, final String dataKey){
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot read data
+			if(!optionalSource.isPresent()) {
+				return Optional.empty();
+			}
+			
+			return optionalSource.get().getInt(uuid, pluginKey, dataKey);
+		}
+		
+		public static int getInt(final UUID uuid, final String pluginKey, final String dataKey, final int other) {
+			return getInt(uuid, pluginKey, dataKey).orElse(other);
 		}
 		
 		public static Optional<Integer> getInt(final OfflinePlayer player, final String pluginKey, final String dataKey){
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return Optional.empty();
-			}
-			
-			return optionalSource.get().getInt(player, pluginKey, dataKey);
+			return getInt(player.getUniqueId(), pluginKey, dataKey);
 		}
 		
 		public static int getInt(final OfflinePlayer player, final String pluginKey, final String dataKey, final int other) {
-			return getInt(player, pluginKey, dataKey).orElse(other);
+			return getInt(player.getUniqueId(), pluginKey, dataKey, other);
 		}
 		
-		public static Optional<Long> getLong(final OfflinePlayer player, final String pluginKey, final String dataKey){
+		public static Optional<Long> getLong(final UUID uuid, final String pluginKey, final String dataKey){
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot read data
 			if(!optionalSource.isPresent()) {
 				return Optional.empty();
 			}
 			
-			return optionalSource.get().getLong(player, pluginKey, dataKey);
+			return optionalSource.get().getLong(uuid, pluginKey, dataKey);
+		}
+		
+		public static long getLong(final UUID uuid, final String pluginKey, final String dataKey, final long other) {
+			return getLong(uuid, pluginKey, dataKey).orElse(other);
+		}
+		
+		public static Optional<Long> getLong(final Player player, final String pluginKey, final String dataKey){
+			return getLong(player.getUniqueId(), pluginKey, dataKey);
 		}
 		
 		public static long getLong(final OfflinePlayer player, final String pluginKey, final String dataKey, final long other) {
-			return getLong(player, pluginKey, dataKey).orElse(other);
+			return getLong(player.getUniqueId(), pluginKey, dataKey, other);
+		}
+		
+		public static Optional<Float> getFloat(final UUID uuid, final String pluginKey, final String dataKey){
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot read data
+			if(!optionalSource.isPresent()) {
+				return Optional.empty();
+			}
+			
+			return optionalSource.get().getFloat(uuid, pluginKey, dataKey);
+		}
+		
+		public static float getFloat(final UUID uuid, final String pluginKey, final String dataKey, final float other) {
+			return getFloat(uuid, pluginKey, dataKey).orElse(other);
 		}
 		
 		public static Optional<Float> getFloat(final OfflinePlayer player, final String pluginKey, final String dataKey){
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return Optional.empty();
-			}
-			
-			return optionalSource.get().getFloat(player, pluginKey, dataKey);
+			return getFloat(player.getUniqueId(), pluginKey, dataKey);
 		}
 		
 		public static float getFloat(final OfflinePlayer player, final String pluginKey, final String dataKey, final float other) {
-			return getFloat(player, pluginKey, dataKey).orElse(other);
+			return getFloat(player.getUniqueId(), pluginKey, dataKey, other);
+		}
+		
+		public static Optional<Double> getDouble(final UUID uuid, final String pluginKey, final String dataKey){
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot read data
+			if(!optionalSource.isPresent()) {
+				return Optional.empty();
+			}
+			
+			return optionalSource.get().getDouble(uuid, pluginKey, dataKey);
+		}
+		
+		public static double getDouble(final UUID uuid, final String pluginKey, final String dataKey, final double other) {
+			return getDouble(uuid, pluginKey, dataKey).orElse(other);
 		}
 		
 		public static Optional<Double> getDouble(final OfflinePlayer player, final String pluginKey, final String dataKey){
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return Optional.empty();
-			}
-			
-			return optionalSource.get().getDouble(player, pluginKey, dataKey);
+			return getDouble(player.getUniqueId(), pluginKey, dataKey);
 		}
 		
 		public static double getDouble(final OfflinePlayer player, final String pluginKey, final String dataKey, final double other) {
-			return getDouble(player, pluginKey, dataKey).orElse(other);
+			return getDouble(player.getUniqueId(), pluginKey, dataKey, other);
+		}
+		
+		public static Optional<Boolean> getBoolean(final UUID uuid, final String pluginKey, final String dataKey){
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot read data
+			if(!optionalSource.isPresent()) {
+				return Optional.empty();
+			}
+			
+			return optionalSource.get().getBoolean(uuid, pluginKey, dataKey);
+		}
+		
+		public static boolean getBoolean(final UUID uuid, final String pluginKey, final String dataKey, final boolean other) {
+			return getBoolean(uuid, pluginKey, dataKey).orElse(other);
 		}
 		
 		public static Optional<Boolean> getBoolean(final OfflinePlayer player, final String pluginKey, final String dataKey){
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return Optional.empty();
-			}
-			
-			return optionalSource.get().getBoolean(player, pluginKey, dataKey);
+			return getBoolean(player.getUniqueId(), pluginKey, dataKey);
 		}
 		
 		public static boolean getBoolean(final OfflinePlayer player, final String pluginKey, final String dataKey, final boolean other) {
-			return getBoolean(player, pluginKey, dataKey).orElse(other);
+			return getBoolean(player.getUniqueId(), pluginKey, dataKey, other);
 		}
 		
-		public static Optional<List<String>> getList(final OfflinePlayer player, final String pluginKey, final String dataKey){
+		public static Optional<List<String>> getList(final UUID uuid, final String pluginKey, final String dataKey){
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot read data
 			if(!optionalSource.isPresent()) {
 				return Optional.empty();
 			}
 			
-			return optionalSource.get().getList(player, pluginKey, dataKey);
+			return optionalSource.get().getList(uuid, pluginKey, dataKey);
+		}
+		
+		public static List<String> getList(final UUID uuid, final String pluginKey, final String dataKey, final List<String> other) {
+			return getList(uuid, pluginKey, dataKey).orElse(other);
+		}
+		
+		public static Optional<List<String>> getList(final OfflinePlayer player, final String pluginKey, final String dataKey){
+			return getList(player.getUniqueId(), pluginKey, dataKey);
 		}
 		
 		public static List<String> getList(final OfflinePlayer player, final String pluginKey, final String dataKey, final List<String> other) {
-			return getList(player, pluginKey, dataKey).orElse(other);
+			return getList(player.getUniqueId(), pluginKey, dataKey, other);
 		}
 		
 	}
@@ -388,34 +473,46 @@ public class DataManager {
 			return optionalSource.get().isGroup(group, pluginKey);
 		}
 		
-		public static boolean addMember(final OfflinePlayer player, final String group, final String pluginKey) {
+		public static boolean addMember(final UUID uuid, final String group, final String pluginKey) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot write data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().addMember(player, group, pluginKey);
+			return optionalSource.get().addMember(uuid, group, pluginKey);
+		}
+		
+		public static boolean addMember(final OfflinePlayer player, final String group, final String pluginKey) {
+			return addMember(player.getUniqueId(), group, pluginKey);
+		}
+		
+		public static boolean removeMember(final UUID uuid, final String group, final String pluginKey) {
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot write data
+			if(!optionalSource.isPresent()) {
+				return false;
+			}
+			
+			return optionalSource.get().removeMember(uuid, group, pluginKey);
 		}
 		
 		public static boolean removeMember(final OfflinePlayer player, final String group, final String pluginKey) {
+			return removeMember(player.getUniqueId(), group, pluginKey);
+		}
+		
+		public static boolean isMember(final UUID uuid, final String group, final String pluginKey) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot write data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().removeMember(player, group, pluginKey);
+			return optionalSource.get().isMember(uuid, group, pluginKey);
 		}
 		
 		public static boolean isMember(final OfflinePlayer player, final String group, final String pluginKey) {
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot write data
-			if(!optionalSource.isPresent()) {
-				return false;
-			}
-			
-			return optionalSource.get().isMember(player, group, pluginKey);
+			return isMember(player.getUniqueId(), group, pluginKey);
 		}
 		
 		public static Optional<List<OfflinePlayer>> getMembers(final String group, final String pluginKey) {
@@ -448,14 +545,18 @@ public class DataManager {
 			return Optional.of(optionalSource.get().getGroups(pluginKey));
 		}
 		
-		public static Optional<List<String>> getGroups(final OfflinePlayer player, final String pluginKey) {
+		public static Optional<List<String>> getGroups(final UUID uuid, final String pluginKey) {
 			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot write data
+			// if no data source is present we cannot read data
 			if(!optionalSource.isPresent()) {
 				return Optional.empty();
 			}
 			
-			return Optional.of(optionalSource.get().getGroups(player, pluginKey));
+			return Optional.of(optionalSource.get().getGroups(uuid, pluginKey));
+		}
+		
+		public static Optional<List<String>> getGroups(final OfflinePlayer player, final String pluginKey) {
+			return getGroups(player.getUniqueId(), pluginKey);
 		}
 
 		public static boolean set(final String group, final String pluginKey, final String dataKey, final String data) {
@@ -626,172 +727,256 @@ public class DataManager {
 			return getList(group, pluginKey, dataKey).orElse(other);
 		}
 
-		public static boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final String data) {
+		public static boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final String data) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot write data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, group, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, group, pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final String data) {
+			return set(player.getUniqueId(), group, pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final int data) {
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot write data
+			if(!optionalSource.isPresent()) {
+				return false;
+			}
+			
+			return optionalSource.get().set(uuid, group, pluginKey, dataKey, data);
 		}
 		
 		public static boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final int data) {
+			return set(player.getUniqueId(), group, pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final long data) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot write data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, group, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, group, pluginKey, dataKey, data);
 		}
 		
 		public static boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final long data) {
+			return set(player.getUniqueId(), group, pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final float data) {
 			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot write data
+			// if no data source is present we cannot read data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, group, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, group, pluginKey, dataKey, data);
 		}
 		
 		public static boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final float data) {
+			return set(player.getUniqueId(), group, pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final double data) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot read data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, group, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, group, pluginKey, dataKey, data);
 		}
 		
 		public static boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final double data) {
+			return set(player.getUniqueId(), group, pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final boolean data) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot read data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, group, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, group, pluginKey, dataKey, data);
 		}
 		
 		public static boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final boolean data) {
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return false;
-			}
-			
-			return optionalSource.get().set(player, group, pluginKey, dataKey, data);
+			return set(player.getUniqueId(), group, pluginKey, dataKey, data);
 		}
 
-		public static boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final List<String> data) {
+		public static boolean set(final UUID uuid, final String group, final String pluginKey, final String dataKey, final List<String> data) {
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot write data
 			if(!optionalSource.isPresent()) {
 				return false;
 			}
 			
-			return optionalSource.get().set(player, group, pluginKey, dataKey, data);
+			return optionalSource.get().set(uuid, group, pluginKey, dataKey, data);
+		}
+		
+		public static boolean set(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final List<String> data) {
+			return set(player.getUniqueId(), group, pluginKey, dataKey, data);
+		}
+		
+		public static Optional<String> getString(final UUID uuid, final String group, final String pluginKey, final String dataKey){
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot read data
+			if(!optionalSource.isPresent()) {
+				return Optional.empty();
+			}
+			
+			return optionalSource.get().getString(uuid, group, pluginKey, dataKey);
+		}
+		
+		public static String getString(final UUID uuid, final String group, final String pluginKey, final String dataKey, final String other) {
+			return getString(uuid, group, pluginKey, dataKey).orElse(other);
 		}
 		
 		public static Optional<String> getString(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey){
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return Optional.empty();
-			}
-			
-			return optionalSource.get().getString(player, group, pluginKey, dataKey);
+			return getString(player.getUniqueId(), group, pluginKey, dataKey);
 		}
 		
 		public static String getString(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final String other) {
-			return getString(player, group, pluginKey, dataKey).orElse(other);
+			return getString(player.getUniqueId(), group, pluginKey, dataKey, other);
+		}
+		
+		public static Optional<Integer> getInt(final UUID uuid, final String group, final String pluginKey, final String dataKey){
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot read data
+			if(!optionalSource.isPresent()) {
+				return Optional.empty();
+			}
+			
+			return optionalSource.get().getInt(uuid, group, pluginKey, dataKey);
+		}
+		
+		public static int getInt(final UUID uuid, final String group, final String pluginKey, final String dataKey, final int other) {
+			return getInt(uuid, group, pluginKey, dataKey).orElse(other);
 		}
 		
 		public static Optional<Integer> getInt(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey){
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return Optional.empty();
-			}
-			
-			return optionalSource.get().getInt(player, group, pluginKey, dataKey);
+			return getInt(player.getUniqueId(), group, pluginKey, dataKey);
 		}
 		
 		public static int getInt(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final int other) {
-			return getInt(player, group, pluginKey, dataKey).orElse(other);
+			return getInt(player.getUniqueId(), group, pluginKey, dataKey, other);
+		}
+		
+		public static Optional<Long> getLong(final UUID uuid, final String group, final String pluginKey, final String dataKey){
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot read data
+			if(!optionalSource.isPresent()) {
+				return Optional.empty();
+			}
+			
+			return optionalSource.get().getLong(uuid, group, pluginKey, dataKey);
+		}
+		
+		public static long getLong(final UUID uuid, final String group, final String pluginKey, final String dataKey, final long other) {
+			return getLong(uuid, group, pluginKey, dataKey).orElse(other);
 		}
 		
 		public static Optional<Long> getLong(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey){
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return Optional.empty();
-			}
-			
-			return optionalSource.get().getLong(player, group, pluginKey, dataKey);
+			return getLong(player.getUniqueId(), group, pluginKey, dataKey);
 		}
 		
 		public static long getLong(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final long other) {
-			return getLong(player, group, pluginKey, dataKey).orElse(other);
+			return getLong(player.getUniqueId(), group, pluginKey, dataKey, other);
+		}
+		
+		public static Optional<Float> getFloat(final UUID uuid, final String group, final String pluginKey, final String dataKey){
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot read data
+			if(!optionalSource.isPresent()) {
+				return Optional.empty();
+			}
+			
+			return optionalSource.get().getFloat(uuid, group, pluginKey, dataKey);
+		}
+		
+		public static float getFloat(final UUID uuid, final String group, final String pluginKey, final String dataKey, final float other) {
+			return getFloat(uuid, group, pluginKey, dataKey).orElse(other);
 		}
 		
 		public static Optional<Float> getFloat(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey){
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return Optional.empty();
-			}
-			
-			return optionalSource.get().getFloat(player, group, pluginKey, dataKey);
+			return getFloat(player.getUniqueId(), group, pluginKey, dataKey);
 		}
 		
 		public static float getFloat(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final float other) {
-			return getFloat(player, group, pluginKey, dataKey).orElse(other);
+			return getFloat(player.getUniqueId(), group, pluginKey, dataKey, other);
+		}
+		
+		public static Optional<Double> getDouble(final UUID uuid, final String group, final String pluginKey, final String dataKey){
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot read data
+			if(!optionalSource.isPresent()) {
+				return Optional.empty();
+			}
+			
+			return optionalSource.get().getDouble(uuid, group, pluginKey, dataKey);
+		}
+		
+		public static double getDouble(final UUID uuid, final String group, final String pluginKey, final String dataKey, final double other) {
+			return getDouble(uuid, group, pluginKey, dataKey).orElse(other);
 		}
 		
 		public static Optional<Double> getDouble(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey){
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return Optional.empty();
-			}
-			
-			return optionalSource.get().getDouble(player, group, pluginKey, dataKey);
+			return getDouble(player.getUniqueId(), group, pluginKey, dataKey);
 		}
 		
 		public static double getDouble(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final double other) {
-			return getDouble(player, group, pluginKey, dataKey).orElse(other);
+			return getDouble(player.getUniqueId(), group, pluginKey, dataKey, other);
+		}
+		
+		public static Optional<Boolean> getBoolean(final UUID uuid, final String group, final String pluginKey, final String dataKey){
+			final Optional<DataSource> optionalSource = getDataSource();
+			// if no data source is present we cannot read data
+			if(!optionalSource.isPresent()) {
+				return Optional.empty();
+			}
+			
+			return optionalSource.get().getBoolean(uuid, group, pluginKey, dataKey);
+		}
+		
+		public static boolean getBoolean(final UUID uuid, final String group, final String pluginKey, final String dataKey, final boolean other) {
+			return getBoolean(uuid, group, pluginKey, dataKey).orElse(other);
 		}
 		
 		public static Optional<Boolean> getBoolean(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey){
-			final Optional<DataSource> optionalSource = getDataSource();
-			// if no data source is present we cannot read data
-			if(!optionalSource.isPresent()) {
-				return Optional.empty();
-			}
-			
-			return optionalSource.get().getBoolean(player, group, pluginKey, dataKey);
+			return getBoolean(player.getUniqueId(), group, pluginKey, dataKey);
 		}
 		
 		public static boolean getBoolean(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final boolean other) {
-			return getBoolean(player, group, pluginKey, dataKey).orElse(other);
+			return getBoolean(player.getUniqueId(), group, pluginKey, dataKey, other);
 		}
 		
-		public static Optional<List<String>> getList(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey){
+		public static Optional<List<String>> getList(final UUID uuid, final String group, final String pluginKey, final String dataKey){
 			final Optional<DataSource> optionalSource = getDataSource();
 			// if no data source is present we cannot read data
 			if(!optionalSource.isPresent()) {
 				return Optional.empty();
 			}
 			
-			return optionalSource.get().getList(player, group, pluginKey, dataKey);
+			return optionalSource.get().getList(uuid, group, pluginKey, dataKey);
+		}
+		
+		public static List<String> getList(final UUID uuid, final String group, final String pluginKey, final String dataKey, final List<String> other) {
+			return getList(uuid, group, pluginKey, dataKey).orElse(other);
+		}
+		
+		public static Optional<List<String>> getList(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey){
+			return getList(player.getUniqueId(), group, pluginKey, dataKey);
 		}
 		
 		public static List<String> getList(final OfflinePlayer player, final String group, final String pluginKey, final String dataKey, final List<String> other) {
-			return getList(player, group, pluginKey, dataKey).orElse(other);
+			return getList(player.getUniqueId(), group, pluginKey, dataKey, other);
 		}
 		
 	}
