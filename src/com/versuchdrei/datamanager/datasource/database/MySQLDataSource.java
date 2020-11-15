@@ -1,4 +1,4 @@
-package com.skitskurr.datamanager.datasource.database;
+package com.versuchdrei.datamanager.datasource.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * an implementation of a database backend using MySQL
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public class MySQLDataSource extends DBDataSource{
 
 	private final String hostname;

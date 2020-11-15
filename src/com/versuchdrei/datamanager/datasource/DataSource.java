@@ -1,9 +1,14 @@
-package com.skitskurr.datamanager.datasource;
+package com.versuchdrei.datamanager.datasource;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * the super interface for all backend systems
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public interface DataSource {
 	
 	static final String FILE_PATH = "plugins/DataManager/";

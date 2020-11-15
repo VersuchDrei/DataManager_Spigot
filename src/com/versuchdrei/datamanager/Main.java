@@ -1,15 +1,20 @@
-package com.skitskurr.datamanager;
+package com.versuchdrei.datamanager;
 
 import java.util.Optional;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.skitskurr.datamanager.datasource.DataSource;
-import com.skitskurr.datamanager.datasource.config.MultiYamlDataSource;
-import com.skitskurr.datamanager.datasource.config.SingleYamlDataSource;
-import com.skitskurr.datamanager.datasource.database.MySQLDataSource;
+import com.versuchdrei.datamanager.datasource.DataSource;
+import com.versuchdrei.datamanager.datasource.config.MultiYamlDataSource;
+import com.versuchdrei.datamanager.datasource.config.SingleYamlDataSource;
+import com.versuchdrei.datamanager.datasource.database.MySQLDataSource;
 
+/**
+ * the main class of the data manager
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public class Main extends JavaPlugin{
 	
 	private static final String CONFIG_KEY_DATA_SYSTEM = "dataSystem";

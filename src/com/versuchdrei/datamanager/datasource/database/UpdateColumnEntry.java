@@ -1,5 +1,10 @@
-package com.skitskurr.datamanager.datasource.database;
+package com.versuchdrei.datamanager.datasource.database;
 
+/**
+ * a class representing a column and its value in an UPDATE statement
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public class UpdateColumnEntry extends ColumnEntry{
 
 	private final boolean key;

@@ -1,7 +1,12 @@
-package com.skitskurr.datamanager.datasource.database;
+package com.versuchdrei.datamanager.datasource.database;
 
 import java.util.List;
 
+/**
+ * an empty result
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public class EmptyResult implements Result{
 
 	@Override

@@ -1,5 +1,10 @@
-package com.skitskurr.datamanager.datasource.config;
+package com.versuchdrei.datamanager.datasource.config;
 
+/**
+ * an enum for all keys for config type backends
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public enum ConfigDataType {
 	STRING("string"),
 	INT("int"),

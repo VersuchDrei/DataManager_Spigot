@@ -1,6 +1,6 @@
-main: com.skitskurr.datamanager.Main
+main: com.versuchdrei.datamanager.Main
 name: DataManager
 version: 1.0
 description: A plugin to manage the serialization of data.
 api-version: 1.16
-author: Skitskurr
+author: VersuchDrei

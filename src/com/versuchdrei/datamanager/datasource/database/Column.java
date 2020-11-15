@@ -1,5 +1,10 @@
-package com.skitskurr.datamanager.datasource.database;
+package com.versuchdrei.datamanager.datasource.database;
 
+/**
+ * a wrapper class for all properties of a column
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public class Column {
 
 	private final String title;

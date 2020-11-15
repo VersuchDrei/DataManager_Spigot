@@ -1,4 +1,4 @@
-package com.skitskurr.datamanager.datasource.database;
+package com.versuchdrei.datamanager.datasource.database;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,9 +6,14 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.skitskurr.datamanager.datasource.DataSource;
-import com.skitskurr.datamanager.utils.StringUtils;
+import com.versuchdrei.datamanager.datasource.DataSource;
+import com.versuchdrei.datamanager.utils.StringUtils;
 
+/**
+ * the superclass for all backends using databases
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public abstract class DBDataSource implements DataSource{
 	
 

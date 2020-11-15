@@ -1,5 +1,10 @@
-package com.skitskurr.datamanager.datasource.database;
+package com.versuchdrei.datamanager.datasource.database;
 
+/**
+ * a class representing a column and its value in an INSERT statement
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public class ColumnEntry {
 	
 	private final String column;

@@ -1,4 +1,4 @@
-package com.skitskurr.datamanager.datasource.config;
+package com.versuchdrei.datamanager.datasource.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +11,13 @@ import java.util.stream.Collectors;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.skitskurr.datamanager.datasource.DataSource;
+import com.versuchdrei.datamanager.datasource.DataSource;
 
+/**
+ * a datasource for a single yaml file holding all information
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public class SingleYamlDataSource implements DataSource{
 	
 	private static final String FILE_NAME = "singleConfig.yml";

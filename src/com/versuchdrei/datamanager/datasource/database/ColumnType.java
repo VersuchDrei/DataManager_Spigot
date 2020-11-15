@@ -1,9 +1,9 @@
-package com.skitskurr.datamanager.datasource.database;
+package com.versuchdrei.datamanager.datasource.database;
 
 /**
  * The different types of data to hold. 
  * Whether or not some of these will use the same type on the database is up to the implementation of the DataSource.
- * @author Skitskurr
+ * @author VersuchDrei
  * @version 1.0
  */
 public enum ColumnType {

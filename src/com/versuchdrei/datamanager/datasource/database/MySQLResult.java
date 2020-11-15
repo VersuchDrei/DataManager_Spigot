@@ -1,12 +1,17 @@
-package com.skitskurr.datamanager.datasource.database;
+package com.versuchdrei.datamanager.datasource.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.skitskurr.datamanager.utils.StringUtils;
+import com.versuchdrei.datamanager.utils.StringUtils;
 
+/**
+ * an implementation of a result using MySQL
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public class MySQLResult implements Result{
 
 	private final ResultSet resultSet;

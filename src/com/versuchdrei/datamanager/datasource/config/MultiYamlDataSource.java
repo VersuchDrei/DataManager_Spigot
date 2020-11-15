@@ -1,4 +1,4 @@
-package com.skitskurr.datamanager.datasource.config;
+package com.versuchdrei.datamanager.datasource.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,8 +21,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.skitskurr.datamanager.datasource.DataSource;
+import com.versuchdrei.datamanager.datasource.DataSource;
 
+/**
+ * a datasource for yaml files which creates a file for every player
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public class MultiYamlDataSource implements DataSource{
 	
 	private static final String FILE_NAME_GLOBAL = "globalConfig.yml";

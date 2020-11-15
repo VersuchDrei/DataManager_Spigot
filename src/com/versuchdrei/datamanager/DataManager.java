@@ -1,4 +1,4 @@
-package com.skitskurr.datamanager;
+package com.versuchdrei.datamanager;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,8 +9,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import com.skitskurr.datamanager.datasource.DataSource;
+import com.versuchdrei.datamanager.datasource.DataSource;
 
+/**
+ * the API class to access the data manager from other plugins
+ * @author VersuchDrei
+ * @version 1.0
+ */
 public class DataManager {
 	
 	public static class Global{
