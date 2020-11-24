@@ -17,40 +17,40 @@ import com.versuchdrei.datamanager.utils.StringUtils;
 public abstract class DBDataSource implements DataSource{
 	
 
-	private static final String TABLE_STRINGS = "Skitskurr_DataManager_Strings";
-	private static final String TABLE_INTS = "Skitskurr_DataManager_Ints";
-	private static final String TABLE_LONGS = "Skitskurr_DataManager_Longs";
-	private static final String TABLE_FLOATS = "Skitskurr_DataManager_Floats";
-	private static final String TABLE_DOUBLES = "Skitskurr_DataManager_Doubles";
-	private static final String TABLE_BOOLEANS = "Skitskurr_DataManager_Names";
-	private static final String TABLE_LISTS = "Skitskurr_DataManager_Lists";
+	private static final String TABLE_STRINGS = "VersuchDrei_DataManager_Strings";
+	private static final String TABLE_INTS = "VersuchDrei_DataManager_Ints";
+	private static final String TABLE_LONGS = "VersuchDrei_DataManager_Longs";
+	private static final String TABLE_FLOATS = "VersuchDrei_DataManager_Floats";
+	private static final String TABLE_DOUBLES = "VersuchDrei_DataManager_Doubles";
+	private static final String TABLE_BOOLEANS = "VersuchDrei_DataManager_Names";
+	private static final String TABLE_LISTS = "VersuchDrei_DataManager_Lists";
 
-	private static final String TABLE_PLAYER_STRINGS = "Skitskurr_DataManager_PlayerStrings";
-	private static final String TABLE_PLAYER_INTS = "Skitskurr_DataManager_PlayerInts";
-	private static final String TABLE_PLAYER_LONGS = "Skitskurr_DataManager_PlayerLongs";
-	private static final String TABLE_PLAYER_FLOATS = "Skitskurr_DataManager_PlayerFloats";
-	private static final String TABLE_PLAYER_DOUBLES = "Skitskurr_DataManager_PlayerDoubles";
-	private static final String TABLE_PLAYER_BOOLEANS = "Skitskurr_DataManager_PlayerNames";
-	private static final String TABLE_PLAYER_LISTS = "Skitskurr_DataManager_PlayerLists";
+	private static final String TABLE_PLAYER_STRINGS = "VersuchDrei_DataManager_PlayerStrings";
+	private static final String TABLE_PLAYER_INTS = "VersuchDrei_DataManager_PlayerInts";
+	private static final String TABLE_PLAYER_LONGS = "VersuchDrei_DataManager_PlayerLongs";
+	private static final String TABLE_PLAYER_FLOATS = "VersuchDrei_DataManager_PlayerFloats";
+	private static final String TABLE_PLAYER_DOUBLES = "VersuchDrei_DataManager_PlayerDoubles";
+	private static final String TABLE_PLAYER_BOOLEANS = "VersuchDrei_DataManager_PlayerNames";
+	private static final String TABLE_PLAYER_LISTS = "VersuchDrei_DataManager_PlayerLists";
 
-	private static final String TABLE_GROUPS = "Skitskurr_DataManager_Groups";
-	private static final String TABLE_GROUP_MEMBERS = "Skitskurr_DataManager_GroupMembers";
+	private static final String TABLE_GROUPS = "VersuchDrei_DataManager_Groups";
+	private static final String TABLE_GROUP_MEMBERS = "VersuchDrei_DataManager_GroupMembers";
 	
-	private static final String TABLE_GROUP_STRINGS = "Skitskurr_DataManager_GroupStrings";
-	private static final String TABLE_GROUP_INTS = "Skitskurr_DataManager_GroupInts";
-	private static final String TABLE_GROUP_LONGS = "Skitskurr_DataManager_GroupLongs";
-	private static final String TABLE_GROUP_FLOATS = "Skitskurr_DataManager_GroupFloats";
-	private static final String TABLE_GROUP_DOUBLES = "Skitskurr_DataManager_GroupDoubles";
-	private static final String TABLE_GROUP_BOOLEANS = "Skitskurr_DataManager_GroupNames";
-	private static final String TABLE_GROUP_LISTS = "Skitskurr_DataManager_GroupLists";
+	private static final String TABLE_GROUP_STRINGS = "VersuchDrei_DataManager_GroupStrings";
+	private static final String TABLE_GROUP_INTS = "VersuchDrei_DataManager_GroupInts";
+	private static final String TABLE_GROUP_LONGS = "VersuchDrei_DataManager_GroupLongs";
+	private static final String TABLE_GROUP_FLOATS = "VersuchDrei_DataManager_GroupFloats";
+	private static final String TABLE_GROUP_DOUBLES = "VersuchDrei_DataManager_GroupDoubles";
+	private static final String TABLE_GROUP_BOOLEANS = "VersuchDrei_DataManager_GroupNames";
+	private static final String TABLE_GROUP_LISTS = "VersuchDrei_DataManager_GroupLists";
 	
-	private static final String TABLE_GROUP_MEMBER_STRINGS = "Skitskurr_DataManager_GroupMemberStrings";
-	private static final String TABLE_GROUP_MEMBER_INTS = "Skitskurr_DataManager_GroupMemberInts";
-	private static final String TABLE_GROUP_MEMBER_LONGS = "Skitskurr_DataManager_GroupMemberLongs";
-	private static final String TABLE_GROUP_MEMBER_FLOATS = "Skitskurr_DataManager_GroupMemberFloats";
-	private static final String TABLE_GROUP_MEMBER_DOUBLES = "Skitskurr_DataManager_GroupMemberDoubles";
-	private static final String TABLE_GROUP_MEMBER_BOOLEANS = "Skitskurr_DataManager_GroupMemberNames";
-	private static final String TABLE_GROUP_MEMBER_LISTS = "Skitskurr_DataManager_GroupMemberLists";
+	private static final String TABLE_GROUP_MEMBER_STRINGS = "VersuchDrei_DataManager_GroupMemberStrings";
+	private static final String TABLE_GROUP_MEMBER_INTS = "VersuchDrei_DataManager_GroupMemberInts";
+	private static final String TABLE_GROUP_MEMBER_LONGS = "VersuchDrei_DataManager_GroupMemberLongs";
+	private static final String TABLE_GROUP_MEMBER_FLOATS = "VersuchDrei_DataManager_GroupMemberFloats";
+	private static final String TABLE_GROUP_MEMBER_DOUBLES = "VersuchDrei_DataManager_GroupMemberDoubles";
+	private static final String TABLE_GROUP_MEMBER_BOOLEANS = "VersuchDrei_DataManager_GroupMemberNames";
+	private static final String TABLE_GROUP_MEMBER_LISTS = "VersuchDrei_DataManager_GroupMemberLists";
 	
 	private static final String COLUMN_PLAYER = "Player";
 	private static final String COLUMN_GROUP = "Group";
