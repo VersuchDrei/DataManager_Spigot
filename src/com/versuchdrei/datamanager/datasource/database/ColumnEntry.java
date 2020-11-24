@@ -25,7 +25,31 @@ public class ColumnEntry {
 		return this.type;
 	}
 	
-	public String getValue() {
+	public boolean asBoolean() {
+		if(this.value.equals("0") || this.value.equals("false") || this.value.equals("")) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public double asDouble() {
+		return Double.parseDouble(this.value);
+	}
+	
+	public float asFloat() {
+		return Float.parseFloat(this.value);
+	}
+	
+	public int asInt() {
+		return Integer.parseInt(this.value);
+	}
+	
+	public long asLong() {
+		return Long.parseLong(this.value);
+	}
+	
+	public String asString() {
 		return this.value;
 	}
 

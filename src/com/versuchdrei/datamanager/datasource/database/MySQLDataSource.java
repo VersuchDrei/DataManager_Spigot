@@ -2,6 +2,7 @@ package com.versuchdrei.datamanager.datasource.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -68,19 +69,20 @@ public class MySQLDataSource extends DBDataSource{
 	@Override
 	protected boolean updateValue(final String table, final List<UpdateColumnEntry> columnEntries) {
 		String columns = columnEntries.get(0).getColumn();
-		String values = formatValue(columnEntries.get(0));
+		String values = "?";
 		
 		final Iterator<UpdateColumnEntry> iterator = columnEntries.iterator();
 		iterator.next();
 		while(iterator.hasNext()) {
 			final UpdateColumnEntry entry = iterator.next();
 			columns += ", " + entry.getColumn();
-			values += ", " + formatValue(entry);
+			values += ", ?";
 		}
 		
 		final String sql = "REPLACE INTO " + table + " (" + columns + ") VALUES (" + values + ")";
-		try (Statement statement = getOpenConnection().createStatement();){
-			statement.executeUpdate(sql);
+		try (PreparedStatement statement = getOpenConnection().prepareStatement(sql)){
+			addSQLparameters(statement, columnEntries);
+			statement.executeUpdate();
 		} catch (final SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -94,8 +96,9 @@ public class MySQLDataSource extends DBDataSource{
 		final String where = keys.stream().map(key -> formatWhere(key)).collect(Collectors.joining(" AND "));
 		
 		final String sql = "SELECT " + column + " FROM " +  table + " WHERE " +  where;
-		try (Statement statement = getOpenConnection().createStatement()){
-			return new MySQLResult(statement.executeQuery(sql), column);
+		try (PreparedStatement statement = getOpenConnection().prepareStatement(sql)){
+			addSQLparameters(statement, keys);
+			return new MySQLResult(statement.executeQuery(), column);
 		} catch (final SQLException e) {
 			e.printStackTrace();
 			return new EmptyResult();
@@ -107,8 +110,9 @@ public class MySQLDataSource extends DBDataSource{
 		final String where = keys.stream().map(key -> formatWhere(key)).collect(Collectors.joining(" AND "));
 		
 		final String sql = "DELETE FROM " + table + " WHERE " + where;
-		try (Statement statement = getOpenConnection().createStatement()){
-			statement.executeUpdate(sql);
+		try (PreparedStatement statement = getOpenConnection().prepareStatement(sql)){
+			addSQLparameters(statement, keys);
+			statement.executeUpdate();
 		} catch (final SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -122,8 +126,9 @@ public class MySQLDataSource extends DBDataSource{
 		final String where = keys.stream().map(key -> formatWhere(key)).collect(Collectors.joining(" AND "));
 		
 		final String sql = "SELECT " + keys.get(0).getColumn() + " FROM " + table + " WHERE " + where;
-		try (Statement statement = getOpenConnection().createStatement()){
-			final ResultSet result = statement.executeQuery(sql);
+		try (PreparedStatement statement = getOpenConnection().prepareStatement(sql)){
+			addSQLparameters(statement, keys);
+			final ResultSet result = statement.executeQuery();
 			return result.next();
 		} catch (final SQLException e) {
 			e.printStackTrace();
@@ -176,20 +181,37 @@ public class MySQLDataSource extends DBDataSource{
 		return "FOREIGN KEY (" + column.getTitle() + ") REFERENCES " + key.getTable() + "(" + key.getColumn() + ") ON DELETE CASCADE";
 	}
 	
-	private String formatValue(final ColumnEntry entry) {
-		switch(entry.getType()) {
-		case INT:
-		case LONG:
-		case FLOAT:
-		case DOUBLE:
-		case BOOLEAN:
-			return entry.getValue();
-		case STRING_KEY:
-		case STRING_VALUE:
-		case STRING_LIST:
-			return "'" + entry.getValue().replace("'", "''") + "'";
-		default:
-			return "NULL";
+	private void addSQLparameters(final PreparedStatement statement, final List<? extends ColumnEntry> columnEntries) throws SQLException {
+		int j = 1;
+		for(final ColumnEntry columnEntry: columnEntries) {
+			switch(columnEntry.getType()) {
+			case BOOLEAN:
+				statement.setBoolean(j++, columnEntry.asBoolean());
+				break;
+			case DOUBLE:
+				statement.setDouble(j++, columnEntry.asDouble());
+				break;
+			case FLOAT:
+				statement.setFloat(j++, columnEntry.asFloat());
+				break;
+			case INT:
+				statement.setInt(j++, columnEntry.asInt());
+				break;
+			case LONG:
+				statement.setLong(j++, columnEntry.asLong());
+				break;
+			case STRING_KEY:
+				statement.setString(j++, columnEntry.asString());
+				break;
+			case STRING_LIST:
+				statement.setString(j++, columnEntry.asString());
+				break;
+			case STRING_VALUE:
+				statement.setString(j++, columnEntry.asString());
+				break;
+			default:
+				break;
+			}
 		}
 	}
 	
@@ -200,13 +222,13 @@ public class MySQLDataSource extends DBDataSource{
 		case FLOAT:
 		case DOUBLE:
 		case BOOLEAN:
-			return entry.getColumn() + " = " + entry.getValue();
+			return entry.getColumn() + " = ?";
 		case STRING_KEY:
 		case STRING_VALUE:
 		case STRING_LIST:
-			return entry.getColumn() + " LIKE '" + entry.getValue().replace("'", "''") + "'";
+			return entry.getColumn() + " LIKE ?";
 		default:
-			return "1 = 1";
+			return entry.getColumn() + " = ?";
 		}
 	}
 
