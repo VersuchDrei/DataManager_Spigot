@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -54,13 +55,16 @@ public class MySQLDataSource extends DBDataSource{
 	@Override
 	protected void createTable(final String name, final List<Column> columns) {
 		final String sqlColumns = columns.stream().map(column -> formatColumn(column)).collect(Collectors.joining(", "));
-		final String primaryKeys = columns.stream().filter(column -> column.isUnique()).map(column -> column.getTitle()).collect(Collectors.joining(", "));
-		final String foreignKeys = columns.stream().filter(column -> column.hasForeignKey()).map(column -> ", " + formatForeignKey(column)).collect(Collectors.joining());
+		final String primaryKeys = columns.stream().filter(column -> column.isUnique()).map(column -> "`" + column.getTitle() + "`").collect(Collectors.joining(", "));
+		//final String foreignKeys = columns.stream().filter(column -> column.hasForeignKey()).map(column -> ", " + formatForeignKey(column)).collect(Collectors.joining());
+		final String foreignKeys = columns.stream().filter(column -> column.hasForeignKey()).collect(Collectors.groupingBy(column -> column.getForeignKey().getTable()))
+				.values().stream().map(list -> ", " + formatForeignKey(list)).collect(Collectors.joining());
 		
-		final String sql = "CREATE TABLE IF NOT EXISTS " + name + " (" + sqlColumns + ", PRIMARY KEY (" + primaryKeys + ")" + foreignKeys + ");";
+		final String sql = "CREATE TABLE IF NOT EXISTS `" + name + "` (" + sqlColumns + ", PRIMARY KEY (" + primaryKeys + ")" + foreignKeys + ");";
 		try (Statement statement = getOpenConnection().createStatement();){
 			statement.executeUpdate(sql);
 		} catch (final SQLException e) {
+			System.out.println(sql);
 			e.printStackTrace();
 		}
 		
@@ -68,18 +72,18 @@ public class MySQLDataSource extends DBDataSource{
 
 	@Override
 	protected boolean updateValue(final String table, final List<UpdateColumnEntry> columnEntries) {
-		String columns = columnEntries.get(0).getColumn();
+		String columns = "`" + columnEntries.get(0).getColumn() + "`";
 		String values = "?";
 		
 		final Iterator<UpdateColumnEntry> iterator = columnEntries.iterator();
 		iterator.next();
 		while(iterator.hasNext()) {
 			final UpdateColumnEntry entry = iterator.next();
-			columns += ", " + entry.getColumn();
+			columns += ", `" + entry.getColumn() + "`";
 			values += ", ?";
 		}
 		
-		final String sql = "REPLACE INTO " + table + " (" + columns + ") VALUES (" + values + ")";
+		final String sql = "REPLACE INTO `" + table + "` (" + columns + ") VALUES (" + values + ")";
 		try (PreparedStatement statement = getOpenConnection().prepareStatement(sql)){
 			addSQLparameters(statement, columnEntries);
 			statement.executeUpdate();
@@ -92,16 +96,16 @@ public class MySQLDataSource extends DBDataSource{
 	}
 
 	@Override
-	protected Result getResult(final String table, final String column, final List<ColumnEntry> keys) {
+	protected <T> T getResult(final Function<Result, T> parser, final String table, final String column, final List<ColumnEntry> keys) {
 		final String where = keys.stream().map(key -> formatWhere(key)).collect(Collectors.joining(" AND "));
 		
-		final String sql = "SELECT " + column + " FROM " +  table + " WHERE " +  where;
+		final String sql = "SELECT `" + column + "` FROM `" +  table + "` WHERE " +  where;
 		try (PreparedStatement statement = getOpenConnection().prepareStatement(sql)){
 			addSQLparameters(statement, keys);
-			return new MySQLResult(statement.executeQuery(), column);
+			return parser.apply(new MySQLResult(statement.executeQuery(), column));
 		} catch (final SQLException e) {
 			e.printStackTrace();
-			return new EmptyResult();
+			return parser.apply(new EmptyResult());
 		}
 	}
 
@@ -109,7 +113,7 @@ public class MySQLDataSource extends DBDataSource{
 	protected boolean deleteValue(final String table, final List<ColumnEntry> keys) {
 		final String where = keys.stream().map(key -> formatWhere(key)).collect(Collectors.joining(" AND "));
 		
-		final String sql = "DELETE FROM " + table + " WHERE " + where;
+		final String sql = "DELETE FROM `" + table + "` WHERE " + where;
 		try (PreparedStatement statement = getOpenConnection().prepareStatement(sql)){
 			addSQLparameters(statement, keys);
 			statement.executeUpdate();
@@ -125,7 +129,7 @@ public class MySQLDataSource extends DBDataSource{
 	protected boolean exists(final String table, final List<ColumnEntry> keys) {
 		final String where = keys.stream().map(key -> formatWhere(key)).collect(Collectors.joining(" AND "));
 		
-		final String sql = "SELECT " + keys.get(0).getColumn() + " FROM " + table + " WHERE " + where;
+		final String sql = "SELECT `" + keys.get(0).getColumn() + "` FROM `" + table + "` WHERE " + where;
 		try (PreparedStatement statement = getOpenConnection().prepareStatement(sql)){
 			addSQLparameters(statement, keys);
 			final ResultSet result = statement.executeQuery();
@@ -137,7 +141,7 @@ public class MySQLDataSource extends DBDataSource{
 	}
 	
 	private String formatColumn(final Column column) {
-		String formatted = column.getTitle();
+		String formatted = "`" + column.getTitle() + "`";
 		switch(column.getType()) {
 		case INT:
 			formatted += " INT(10)";
@@ -147,6 +151,7 @@ public class MySQLDataSource extends DBDataSource{
 			break;
 		case FLOAT:
 			formatted += " FLOAT";
+			break;
 		case DOUBLE:
 			formatted += " DOUBLE";
 			break;
@@ -158,10 +163,10 @@ public class MySQLDataSource extends DBDataSource{
 			break;
 		case STRING_VALUE:
 		case STRING_LIST:
-			formatted += " VARCHAR(max)";
+			formatted += " VARCHAR(21844)";
 			break;
 		default:
-			formatted += " VARCHAR(max)";
+			formatted += " VARCHAR(21844)";
 		}
 		
 		if(column.isUnique()) {
@@ -173,12 +178,20 @@ public class MySQLDataSource extends DBDataSource{
 		return formatted;
 	}
 	
-	private String formatForeignKey(final Column column) {
-		if(!column.hasForeignKey()) {
-			throw new IllegalArgumentException("Column has no foreign key.");
+	private String formatForeignKey(final List<Column> columns) {
+		final ForeignKey key = columns.get(0).getForeignKey();
+		String foreignColumns = "`" + columns.get(0).getTitle() + "`";
+		String referencedColumns = "`" + key.getColumn() + "`";
+		
+		final Iterator<Column> iterator = columns.iterator();
+		iterator.next();
+		while(iterator.hasNext()) {
+			final Column column = iterator.next();
+			foreignColumns += ", `" + column.getTitle() + "`";
+			referencedColumns += ", `" + column.getForeignKey().getColumn() + "`";
 		}
-		final ForeignKey key = column.getForeignKey();
-		return "FOREIGN KEY (" + column.getTitle() + ") REFERENCES " + key.getTable() + "(" + key.getColumn() + ") ON DELETE CASCADE";
+		
+		return "FOREIGN KEY (" + foreignColumns + ") REFERENCES `" + key.getTable() + "`(" + referencedColumns + ") ON DELETE CASCADE";
 	}
 	
 	private void addSQLparameters(final PreparedStatement statement, final List<? extends ColumnEntry> columnEntries) throws SQLException {
@@ -222,13 +235,13 @@ public class MySQLDataSource extends DBDataSource{
 		case FLOAT:
 		case DOUBLE:
 		case BOOLEAN:
-			return entry.getColumn() + " = ?";
+			return "`" + entry.getColumn() + "` = ?";
 		case STRING_KEY:
 		case STRING_VALUE:
 		case STRING_LIST:
-			return entry.getColumn() + " LIKE ?";
+			return "`" + entry.getColumn() + "` LIKE ?";
 		default:
-			return entry.getColumn() + " = ?";
+			return "`" + entry.getColumn() + "` = ?";
 		}
 	}
 

@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.versuchdrei.datamanager.utils.StringUtils;
-
 /**
  * an implementation of a result using MySQL
  * @author VersuchDrei
@@ -98,7 +96,11 @@ public class MySQLResult implements Result{
 	@Override
 	public List<String> getList() {
 		try {
-			return StringUtils.stringToList(this.resultSet.getString(column));
+			final List<String> list = new ArrayList<>();
+			do {
+				list.add(this.resultSet.getString(column));
+			} while(this.resultSet.next());
+			return list;
 		} catch (final SQLException e) {
 			e.printStackTrace();
 		}
