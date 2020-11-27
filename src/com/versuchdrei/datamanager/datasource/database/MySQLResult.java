@@ -95,6 +95,9 @@ public class MySQLResult implements Result{
 
 	@Override
 	public List<String> getList() {
+		if(this.isEmpty()) {
+			return new ArrayList<String>(0);
+		}
 		try {
 			final List<String> list = new ArrayList<>();
 			do {
@@ -104,6 +107,6 @@ public class MySQLResult implements Result{
 		} catch (final SQLException e) {
 			e.printStackTrace();
 		}
-		return new ArrayList<String>();
+		return new ArrayList<String>(0);
 	}
 }

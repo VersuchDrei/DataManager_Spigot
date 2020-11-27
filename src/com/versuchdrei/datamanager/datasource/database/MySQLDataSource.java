@@ -35,7 +35,7 @@ public class MySQLDataSource extends DBDataSource{
 	}
 	
 	private Connection getOpenConnection() throws SQLException {
-		if(this.connection != null && !this.connection.isClosed()) {
+		if(this.connection != null && !this.connection.isClosed() && this.connection.isValid(1)) {
 			return this.connection;
 		}
 			
@@ -56,7 +56,6 @@ public class MySQLDataSource extends DBDataSource{
 	protected void createTable(final String name, final List<Column> columns) {
 		final String sqlColumns = columns.stream().map(column -> formatColumn(column)).collect(Collectors.joining(", "));
 		final String primaryKeys = columns.stream().filter(column -> column.isUnique()).map(column -> "`" + column.getTitle() + "`").collect(Collectors.joining(", "));
-		//final String foreignKeys = columns.stream().filter(column -> column.hasForeignKey()).map(column -> ", " + formatForeignKey(column)).collect(Collectors.joining());
 		final String foreignKeys = columns.stream().filter(column -> column.hasForeignKey()).collect(Collectors.groupingBy(column -> column.getForeignKey().getTable()))
 				.values().stream().map(list -> ", " + formatForeignKey(list)).collect(Collectors.joining());
 		
