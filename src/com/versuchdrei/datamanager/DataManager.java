@@ -523,7 +523,7 @@ public class DataManager {
 		public static Optional<List<OfflinePlayer>> getMembers(final String group, final String pluginKey) {
 			final Optional<List<UUID>> memberIDs = getMemberIDs(group, pluginKey);
 			// if we have no IDs we can't map them on the players
-			if(memberIDs.isEmpty()) {
+			if(!memberIDs.isPresent()) {
 				return Optional.empty();
 			}
 			
